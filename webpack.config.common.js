@@ -1,37 +1,12 @@
 const path = require('path')
-const Webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const TerserJSPlugin = require('terser-webpack-plugin')
-
+/**
+ * webpack公共配置
+ */
 module.exports = {
-  devServer: {
-    contentBase: './bundle',
-    open: true,
-    port: 9090,
-    proxy: [
-      {
-        context: ['/user', '/login'],
-        target: 'http://127.0.0.1:3000',
-        changeOrigin: true, // 域名跨域
-        secure: false, // https跨域
-        pathRewrite: { '': '/api' } // 路径重写, 将路径中的api替换为空
-      }
-    ],
-    hot: true, // 开启热更新, 只要开启了热更新就不会自动刷新网页了
-    hotOnly: true // 哪怕不支持热更新也不要刷新网页
-  },
-  /*
-    optimization: 配置webpack的优化项
-    * */
-  optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
-  },
-  devtool: 'eval-cheap-module-source-map',
-  mode: 'development',
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
@@ -228,14 +203,6 @@ module.exports = {
     plugins: 告诉webpack需要新增一些什么样的功能
     * */
   plugins: [
-    new HtmlWebpackPlugin({
-      // 指定打包的模板, 如果不指定会自动生成一个空的
-      template: './src/index.html',
-      minify: {
-        // 告诉htmlplugin打包之后的html文件需要压缩
-        // collapseWhitespace: true,
-      }
-    }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       {
@@ -245,7 +212,6 @@ module.exports = {
     ]),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css'
-    }),
-    new Webpack.HotModuleReplacementPlugin()
+    })
   ]
 }
