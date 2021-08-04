@@ -13,7 +13,7 @@ const ProdConfig = {
   },
   /*
     配置sourcemap
-    development: cheap-module-eval-source-map
+    development: eval-cheap-module-source-map
     production: cheap-module-source-map
     * */
   devtool: 'cheap-module-source-map',
