@@ -7,6 +7,7 @@ const Webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const HappyPack = require('happypack')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 /**
  * webpack公共配置
@@ -287,6 +288,7 @@ config.plugins = makePlugins(config)
 
 function makePlugins (config) {
   const plugins = [
+    new BundleAnalyzerPlugin(),
     // new HtmlWebpackPlugin({
     //   // 指定打包的模板, 如果不指定会自动生成一个空的
     //   template: './src/index.html'
@@ -351,6 +353,13 @@ function makePlugins (config) {
       }]
     })
   ]
+
+  // new HtmlWebpackPlugin({
+  //   // 指定打包的模板, 如果不指定会自动生成一个空的
+  //   template: './src/index.html',
+  //   filename: 'index.html',
+  //   chunks: ['index', 'vendors~index']
+  // }),
 
   // 动态生成多页面打包的 HtmlWebpackPlugin 实例
   Object.keys(config.entry).forEach(function (key) {
