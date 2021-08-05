@@ -1,14 +1,16 @@
-// import $ from 'jquery'
-//
-// const oBtn = document.querySelector('button')
-// oBtn.onclick = function () {
-//   const $div = getComponment()
-//   document.body.appendChild($div[0])
-// }
-// function getComponment () {
-//   const $div = $('<div>我是div</div>')
-//   return $div
-// }
+/*
+import $ from 'jquery';
+
+const oBtn = document.querySelector('button');
+oBtn.onclick = function() {
+    const $div = getComponment();
+    document.body.appendChild($div[0]);
+};
+function getComponment() {
+    const $div = $('<div>我是div</div>');
+    return $div;
+}
+ */
 
 const oBtn = document.querySelector('button')
 oBtn.onclick = function () {
@@ -16,15 +18,16 @@ oBtn.onclick = function () {
     document.body.appendChild($div[0])
   })
 }
-// function getComponment () {
-//   return import('jquery').then(({ default: $ }) => {
-//     const $div = $('<div>我是div</div>')
-//     return $div
-//   })
-// }
-
+/*
+function getComponment() {
+    return import('jquery').then(({ default: $ }) => {
+        const $div = $('<div>我是div</div>');
+        return $div;
+    });
+}
+ */
 async function getComponment () {
-  const { default: $ } = await import('jquery')
+  const { default: $ } = await import(/* webpackPrefetch: true *//* webpackChunkName: "jquery" */'jquery')
   const $div = $('<div>我是div</div>')
   return $div
 }
