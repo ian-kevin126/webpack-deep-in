@@ -1,5 +1,7 @@
-import './css/index.css'
+import $ from 'jquery'
 
-const oDiv = document.createElement('div')
-oDiv.className = 'two'
-document.body.appendChild(oDiv)
+// window.$('html').css({ width: '100%', height: '100%' });
+// window.$('body').css({ width: '100%', height: '100%', background: 'red' });
+$('html').css({ width: '100%', height: '100%' })
+$('body').css({ width: '100%', height: '100%', background: 'red' })
+console.log('www.it666.com')

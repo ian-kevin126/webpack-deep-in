@@ -7,9 +7,18 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
  * webpack公共配置
  */
 module.exports = {
-  entry: './src/index.js',
+  // 告诉webpack需要对代码进行分割
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
+  entry: {
+    // other: './src/js/custom.js',
+    main: './src/index.js'
+  },
   output: {
-    filename: 'bundle.js',
+    filename: 'js/[name].js',
     path: path.resolve(__dirname, '../dist')
   },
   module: {
