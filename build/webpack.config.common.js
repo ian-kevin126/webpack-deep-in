@@ -8,89 +8,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const HappyPack = require('happypack')
 
-const plugins = [
-  new HtmlWebpackPlugin({
-    // 指定打包的模板, 如果不指定会自动生成一个空的
-    template: './src/index.html'
-  }),
-  new CleanWebpackPlugin(),
-  new CopyWebpackPlugin([
-    {
-      from: './src/doc',
-      to: 'doc'
-    }
-  ]),
-  new MiniCssExtractPlugin({
-    filename: 'css/[name].[contenthash:8].css'
-  }),
-  // new Webpack.ProvidePlugin({
-  //   $: 'jquery'
-  // }),
-  /*
-    以下代码的含义:
-    在打包moment这个库的时候, 将整个locale目录都忽略掉
-    * */
-  new Webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-  new HappyPack({
-    id: 'js',
-    use: [{
-      test: /\.js$/,
-      exclude: /node_modules/, // 告诉webpack不处理哪一个文件夹
-      loader: 'babel-loader',
-      options: {
-        presets: [['@babel/preset-env', {
-          targets: {
-            // "chrome": "58",
-          }
-          // useBuiltIns: "usage"
-        }]],
-        plugins: [
-          ['@babel/plugin-proposal-class-properties', { loose: true }],
-          [
-            '@babel/plugin-transform-runtime',
-            {
-              absoluteRuntime: false,
-              corejs: 2,
-              helpers: true,
-              regenerator: true,
-              useESModules: false
-            }
-          ]
-        ]
-      }
-    }]
-  })
-]
-
-/*
-// 将打包后的扩展插件包自动引入到index.html中去
-  new AddAssetHtmlPlugin({
-    filepath: path.resolve(__dirname, '../dll/vendors.dll.js')
-  }),
-  // 将清单文件给到webpack，在dll中已经打好的库，将不会被打到最终的包里面，避免打重复的包
-  new Webpack.DllReferencePlugin({
-    manifest: path.resolve(__dirname, '../dll/vendors.manifest.json')
-  }),
-* */
-
-const dllPath = path.resolve(__dirname, '../dll')
-const files = fs.readdirSync(dllPath)
-files.forEach(function (file) {
-  if (file.endsWith('.js')) {
-    plugins.push(new AddAssetHtmlPlugin({
-      filepath: path.resolve(__dirname, '../dll', file)
-    }))
-  } else if (file.endsWith('.json')) {
-    plugins.push(new Webpack.DllReferencePlugin({
-      manifest: path.resolve(__dirname, '../dll', file)
-    }))
-  }
-})
-
 /**
  * webpack公共配置
  */
-module.exports = {
+const config = {
   /*
    告诉webpack哪些第三方模块不需要打包
    * */
@@ -156,8 +77,8 @@ module.exports = {
     }
   },
   entry: {
-    // other: './src/js/custom.js',
-    main: './src/index.js'
+    index: './src/index.js',
+    detail: './src/detail.js'
   },
   output: {
     filename: 'js/[name].[contenthash:8].js',
@@ -355,9 +276,118 @@ module.exports = {
         ]
       }
     ]
-  },
+  }
   /*
     plugins: 告诉webpack需要新增一些什么样的功能
     * */
-  plugins: plugins
+  // plugins: plugins
 }
+
+config.plugins = makePlugins(config)
+
+function makePlugins (config) {
+  const plugins = [
+    // new HtmlWebpackPlugin({
+    //   // 指定打包的模板, 如果不指定会自动生成一个空的
+    //   template: './src/index.html'
+    // }),
+    // new HtmlWebpackPlugin({
+    //   // 指定打包的模板, 如果不指定会自动生成一个空的
+    //   template: './src/index.html',
+    //   filename: 'index.html',
+    //   chunks: ['index', 'vendors~index']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   // 指定打包的模板, 如果不指定会自动生成一个空的
+    //   template: './src/index.html',
+    //   filename: 'detail.html',
+    //   chunks: ['detail', 'vendors~detail']
+    // }),
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: './src/doc',
+        to: 'doc'
+      }
+    ]),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash:8].css'
+    }),
+    // new Webpack.ProvidePlugin({
+    //   $: 'jquery'
+    // }),
+    /*
+      以下代码的含义:
+      在打包moment这个库的时候, 将整个locale目录都忽略掉
+      * */
+    new Webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new HappyPack({
+      id: 'js',
+      use: [{
+        test: /\.js$/,
+        exclude: /node_modules/, // 告诉webpack不处理哪一个文件夹
+        loader: 'babel-loader',
+        options: {
+          presets: [['@babel/preset-env', {
+            targets: {
+              // "chrome": "58",
+            }
+            // useBuiltIns: "usage"
+          }]],
+          plugins: [
+            ['@babel/plugin-proposal-class-properties', { loose: true }],
+            [
+              '@babel/plugin-transform-runtime',
+              {
+                absoluteRuntime: false,
+                corejs: 2,
+                helpers: true,
+                regenerator: true,
+                useESModules: false
+              }
+            ]
+          ]
+        }
+      }]
+    })
+  ]
+
+  // 动态生成多页面打包的 HtmlWebpackPlugin 实例
+  Object.keys(config.entry).forEach(function (key) {
+    plugins.push(new HtmlWebpackPlugin({
+      // 指定打包的模板, 如果不指定会自动生成一个空的
+      template: './src/index.html',
+      filename: key + '.html',
+      chunks: [key, 'vendors~' + key]
+    }))
+  })
+
+  /*
+// 将打包后的扩展插件包自动引入到index.html中去
+  new AddAssetHtmlPlugin({
+    filepath: path.resolve(__dirname, '../dll/vendors.dll.js')
+  }),
+  // 将清单文件给到webpack，在dll中已经打好的库，将不会被打到最终的包里面，避免打重复的包
+  new Webpack.DllReferencePlugin({
+    manifest: path.resolve(__dirname, '../dll/vendors.manifest.json')
+  }),
+* */
+
+  const dllPath = path.resolve(__dirname, '../dll')
+  const files = fs.readdirSync(dllPath)
+  files.forEach(function (file) {
+    if (file.endsWith('.js')) {
+      plugins.push(new AddAssetHtmlPlugin({
+        filepath: path.resolve(__dirname, '../dll', file)
+      }))
+    } else if (file.endsWith('.json')) {
+      plugins.push(new Webpack.DllReferencePlugin({
+        manifest: path.resolve(__dirname, '../dll', file)
+      }))
+    }
+  })
+
+  return plugins
+}
+
+module.exports = config
