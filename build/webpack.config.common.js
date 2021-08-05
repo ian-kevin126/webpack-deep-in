@@ -2,6 +2,7 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const Webpack = require('webpack')
 
 /**
  * webpack公共配置
@@ -12,7 +13,7 @@ module.exports = {
     splitChunks: {
       chunks: 'all', // 对那些代码进行分割 async(默认值，只分割异步加载模块)、all(所有导入模块)
       minSize: 30, // 表示被分割的代码体积至少有多大才分割(单位是字节)
-      minChunks: 1, // 表示至少被引用多少次数才分割，默认为1
+      minChunks: 1, // 表示至少被引用多少次数才分割，默认为1，这里分割的是node_modules里面的模块
       maxAsyncRequests: 5, // 异步加载并发最大请求数(保持默认即可)
       maxInitialRequests: 3, // 最大的初始请求数(保持默认即可)
       automaticNameDelimiter: '+', // 指定被分割出来的文件名称的连接符
@@ -41,8 +42,8 @@ module.exports = {
         所以就只会执行vendors规则, 只会写入到vendors对应的文件中去
         * */
         default: {
-          minChunks: 1, // 表示至少被引用多少次数才分割，默认为1
-          priority: -20,
+          minChunks: 1, // 表示至少被引用多少次数才分割，默认为1，这里分割的是node_modules之外的模块
+          priority: -20, // default的优先级小于vendor的优先级，node_modules中的模块就会按照vendor中的规则处理，就不会走default的规则了，避免了重复处理。
           reuseExistingChunk: true // 是否复用分割的代码
         }
       }
@@ -256,6 +257,9 @@ module.exports = {
     ]),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash:8].css'
+    }),
+    new Webpack.ProvidePlugin({
+      $: 'jquery'
     })
   ]
 }
