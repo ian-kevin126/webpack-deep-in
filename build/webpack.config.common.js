@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
+const HappyPack = require('happypack')
 
 const plugins = [
   new HtmlWebpackPlugin({
@@ -29,7 +30,36 @@ const plugins = [
     以下代码的含义:
     在打包moment这个库的时候, 将整个locale目录都忽略掉
     * */
-  new Webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+  new Webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  new HappyPack({
+    id: 'js',
+    use: [{
+      test: /\.js$/,
+      exclude: /node_modules/, // 告诉webpack不处理哪一个文件夹
+      loader: 'babel-loader',
+      options: {
+        presets: [['@babel/preset-env', {
+          targets: {
+            // "chrome": "58",
+          }
+          // useBuiltIns: "usage"
+        }]],
+        plugins: [
+          ['@babel/plugin-proposal-class-properties', { loose: true }],
+          [
+            '@babel/plugin-transform-runtime',
+            {
+              absoluteRuntime: false,
+              corejs: 2,
+              helpers: true,
+              regenerator: true,
+              useESModules: false
+            }
+          ]
+        ]
+      }
+    }]
+  })
 ]
 
 /*
@@ -169,36 +199,41 @@ module.exports = {
       //   }
       // },
       // 打包JS规则
+      // {
+      //   test: /\.js$/,
+      //   exclude: /node_modules/, // 告诉webpack不处理哪一个文件夹
+      //   loader: 'babel-loader',
+      //   options: {
+      //     presets: [
+      //       [
+      //         '@babel/preset-env',
+      //         {
+      //           targets: {
+      //             // "chrome": "58",
+      //           }
+      //           // useBuiltIns: "usage"
+      //         }
+      //       ]
+      //     ],
+      //     plugins: [
+      //       ['@babel/plugin-proposal-class-properties', { loose: true }],
+      //       [
+      //         '@babel/plugin-transform-runtime',
+      //         {
+      //           absoluteRuntime: false,
+      //           corejs: 2,
+      //           helpers: true,
+      //           regenerator: true,
+      //           useESModules: false
+      //         }
+      //       ]
+      //     ]
+      //   }
+      // },
       {
         test: /\.js$/,
         exclude: /node_modules/, // 告诉webpack不处理哪一个文件夹
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            [
-              '@babel/preset-env',
-              {
-                targets: {
-                  // "chrome": "58",
-                }
-                // useBuiltIns: "usage"
-              }
-            ]
-          ],
-          plugins: [
-            ['@babel/plugin-proposal-class-properties', { loose: true }],
-            [
-              '@babel/plugin-transform-runtime',
-              {
-                absoluteRuntime: false,
-                corejs: 2,
-                helpers: true,
-                regenerator: true,
-                useESModules: false
-              }
-            ]
-          ]
-        }
+        use: 'happypack/loader?id=js' // 告诉它我们开启多进程打包的是js文件，它也可以多进程打包css，图片
       },
       {
         test: /\.(eot|json|svg|ttf|woff|woff2)$/,
