@@ -1,6 +1,6 @@
-function addSpan() {
-  let span = document.createElement("span");
-  span.innerText = "www.it666.com11";
-  document.body.appendChild(span);
+function addSpan () {
+  const span = document.createElement('span')
+  span.innerText = 'www.it666.com11'
+  document.body.appendChild(span)
 }
-export default addSpan;
+export default addSpan
