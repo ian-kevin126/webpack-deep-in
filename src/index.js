@@ -1,4 +1,5 @@
-import './css/index.css';
+import './css/index.css'
 
-const name = 'kevin';
-console.log(name);
+const oDiv = document.createElement('div')
+oDiv.className = 'two'
+document.body.appendChild(oDiv)

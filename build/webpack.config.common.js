@@ -2,6 +2,7 @@ const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 /**
  * webpack公共配置
  */
@@ -9,7 +10,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'bundle')
+    path: path.resolve(__dirname, '../dist')
   },
   module: {
     rules: [
@@ -103,7 +104,7 @@ module.exports = {
               name: '[name].[ext]',
               // 指定打包后文件存放目录
               outputPath: 'images/',
-              publicPath: 'http://localhost:63342/webpack-deep-in/bundle/images'
+              publicPath: 'http://localhost:63342/webpack-deep-in/dist/images'
             }
           },
           {

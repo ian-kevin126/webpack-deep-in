@@ -1,4 +1,4 @@
-import '../css/index.css';
+import '../css/index.css'
 
-const name = 'lnj';
-console.log(name);
+const name = 'lnj'
+console.log(name)

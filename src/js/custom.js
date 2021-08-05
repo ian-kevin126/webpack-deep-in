@@ -1,11 +1,7 @@
-import icon from "../images/lnj.jpg";
-import "../css/index.css";
-
-function addImage() {
-  let oImg = document.createElement("img");
-  oImg.src = icon;
-  oImg.setAttribute("class", "size");
-  document.body.appendChild(oImg);
+function add (a, b) {
+  return a + b
 }
-
-export { addImage };
+function minus (a, b) {
+  return a - b
+}
+export { add, minus }

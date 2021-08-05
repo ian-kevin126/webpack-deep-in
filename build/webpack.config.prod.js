@@ -3,13 +3,16 @@ const TerserJSPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const Merge = require('webpack-merge')
 const CommonConfig = require('./webpack.config.common.js')
+const glob = require('glob-all')
+const PurifyCSSPlugin = require('purifycss-webpack')
+const path = require('path')
 
 const ProdConfig = {
   /*
     optimization: 配置webpack的优化项
     * */
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
   },
   /*
     配置sourcemap
@@ -34,7 +37,15 @@ const ProdConfig = {
         // 告诉htmlplugin打包之后的html文件需要压缩
         collapseWhitespace: true
       }
+    }),
+    new PurifyCSSPlugin({
+      // 告诉PurifyCSSPlugin需要过滤哪些文件
+      paths: glob.sync([
+        path.join(__dirname, '../src/*.html'),
+        path.join(__dirname, '../src/*.js')
+      ])
     })
   ]
 }
+
 module.exports = Merge(CommonConfig, ProdConfig)

@@ -15,7 +15,7 @@ module.exports = {
     },
     'postcss-sprites': {
       // 告诉webpack合并之后的图片保存到什么地方
-      spritePath: './bundle/images',
+      spritePath: './dist/images',
       // 告诉webpack合并图片的时候如何分组，一个文件夹打成一张精灵图
       groupBy: function (image) {
         // url: '../images/animal/animal1.png',

@@ -1,14 +1,18 @@
 const Webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const Merge = require('webpack-merge')
-const CommonConfig = require('./webpack.config.common.js')
+const CommonConfig = require('./webpack.config.common')
 
 const DevConfig = {
+  // 告诉webpack只打包用到的js代码，不用的就tree-shaking
+  optimization: {
+    usedExports: true
+  },
   /*
   devServer: 自动检测文件变化配置
   * */
   devServer: {
-    contentBase: './bundle',
+    contentBase: './dist',
     open: true,
     port: 9090,
     proxy: [{
