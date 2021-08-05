@@ -18,7 +18,7 @@ module.exports = {
     main: './src/index.js'
   },
   output: {
-    filename: 'js/[name].js',
+    filename: 'js/[name].[contenthash:8].js',
     path: path.resolve(__dirname, '../dist')
   },
   module: {
@@ -94,7 +94,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               // 指定打包后文件名称
-              name: '[name].[ext]',
+              name: '[name].[contenthash:8].[ext]',
               // 指定打包后文件存放目录
               outputPath: 'font/'
             }
@@ -110,7 +110,7 @@ module.exports = {
               // 指定图片限制的大小
               limit: 1024,
               // 指定打包后文件名称
-              name: '[name].[ext]',
+              name: '[name].[contenthash:8].[ext]',
               // 指定打包后文件存放目录
               outputPath: 'images/',
               publicPath: 'http://localhost:63342/webpack-deep-in/dist/images'
@@ -220,7 +220,7 @@ module.exports = {
       }
     ]),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css'
+      filename: 'css/[name].[contenthash:8].css'
     })
   ]
 }

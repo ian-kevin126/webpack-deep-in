@@ -22,8 +22,8 @@ const DevConfig = {
       secure: false, // https跨域
       pathRewrite: { '': '/api' } // 路径重写, 将路径中的api替换为空
     }],
-    hot: true, // 开启热更新, 只要开启了热更新就不会自动刷新网页了
-    hotOnly: true // 哪怕不支持热更新也不要刷新网页
+    // hot: true, // 开启热更新, 只要开启了热更新就不会自动刷新网页了
+    // hotOnly: true // 哪怕不支持热更新也不要刷新网页
   },
   /*
   配置sourcemap
@@ -45,7 +45,7 @@ const DevConfig = {
       // 指定打包的模板, 如果不指定会自动生成一个空的
       template: './src/index.html'
     }),
-    new Webpack.HotModuleReplacementPlugin()
+    // new Webpack.HotModuleReplacementPlugin()
   ]
 }
 
