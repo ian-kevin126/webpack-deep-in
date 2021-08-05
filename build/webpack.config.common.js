@@ -123,6 +123,14 @@ module.exports = {
           ]
         }
       },
+      // {
+      //   test: /\.js$/,
+      //   exclude: /node_modules/, // 告诉webpack不处理哪一个文件夹
+      //   // 以下代码的含义: 但凡在JS中用到了$就去自动加载jQuery
+      //   loader: 'imports-loader?$=jquery',
+      //   // 以下代码的含义: 修改模块中this的指向
+      //   // loader: 'imports-loader?this=>window'
+      // },
       {
         test: /\.(eot|json|svg|ttf|woff|woff2)$/,
         use: [
