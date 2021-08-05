@@ -30,14 +30,14 @@ const ProdConfig = {
     plugins: 告诉webpack需要新增一些什么样的功能
     * */
   plugins: [
-    new HtmlWebpackPlugin({
-      // 指定打包的模板, 如果不指定会自动生成一个空的
-      template: './src/index.html',
-      minify: {
-        // 告诉htmlplugin打包之后的html文件需要压缩
-        collapseWhitespace: true
-      }
-    }),
+    // new HtmlWebpackPlugin({
+    //   // 指定打包的模板, 如果不指定会自动生成一个空的
+    //   template: './src/index.html',
+    //   minify: {
+    //     // 告诉htmlplugin打包之后的html文件需要压缩
+    //     collapseWhitespace: true
+    //   }
+    // }),
     new PurifyCSSPlugin({
       // 告诉PurifyCSSPlugin需要过滤哪些文件
       paths: glob.sync([

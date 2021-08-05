@@ -40,10 +40,10 @@ const DevConfig = {
   plugins: 告诉webpack需要新增一些什么样的功能
   * */
   plugins: [
-    new HtmlWebpackPlugin({
-      // 指定打包的模板, 如果不指定会自动生成一个空的
-      template: './src/index.html'
-    }),
+    // new HtmlWebpackPlugin({
+    //   // 指定打包的模板, 如果不指定会自动生成一个空的
+    //   template: './src/index.html'
+    // }),
     // new Webpack.HotModuleReplacementPlugin()
   ]
 }

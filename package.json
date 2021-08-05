@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npx webpack-dev-server --config build/webpack.config.dev.js",
     "prod": "npx webpack --config build/webpack.config.prod.js",
-    "dev": "npx webpack --config build/webpack.config.dev.js"
+    "dev": "npx webpack --config build/webpack.config.dev.js",
+    "dll": "npx webpack --config build/webpack.config.dll.js"
   },
   "keywords": [],
   "author": "",
