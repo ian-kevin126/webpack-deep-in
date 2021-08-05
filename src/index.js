@@ -1,7 +1,30 @@
-import $ from 'jquery'
+// import $ from 'jquery'
+//
+// const oBtn = document.querySelector('button')
+// oBtn.onclick = function () {
+//   const $div = getComponment()
+//   document.body.appendChild($div[0])
+// }
+// function getComponment () {
+//   const $div = $('<div>我是div</div>')
+//   return $div
+// }
 
-// window.$('html').css({ width: '100%', height: '100%' });
-// window.$('body').css({ width: '100%', height: '100%', background: 'red' });
-$('html').css({ width: '100%', height: '100%' })
-$('body').css({ width: '100%', height: '100%', background: 'red' })
-console.log('www.it666.com')
+const oBtn = document.querySelector('button')
+oBtn.onclick = function () {
+  getComponment().then(($div) => {
+    document.body.appendChild($div[0])
+  })
+}
+// function getComponment () {
+//   return import('jquery').then(({ default: $ }) => {
+//     const $div = $('<div>我是div</div>')
+//     return $div
+//   })
+// }
+
+async function getComponment () {
+  const { default: $ } = await import('jquery')
+  const $div = $('<div>我是div</div>')
+  return $div
+}
