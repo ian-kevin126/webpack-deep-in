@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>18-Tapable-SyncBailHook</title>
+</head>
+<body>
+<!--
+const {
+    SyncHook,
+    SyncBailHook,
+    SyncWaterfallHook,
+    SyncLoopHook,
+    AsyncParallelHook,
+    AsyncParallelBailHook,
+    AsyncSeriesHook,
+    AsyncSeriesBailHook,
+    AsyncSeriesWaterfallHook
+ } = require("tapable");
+
+1.什么是SyncHook同步串行钩子
+SyncHook不关心订阅函数(事件处理函数)的返回值，在收到消息(触发事件)之后，
+会按照订阅的先后顺序执行所有的订阅函数(事件处理函数)
+
+2.什么是SyncBailHook同步串行钩子
+SyncBailHook关心订阅函数(事件处理函数)的返回值，在收到消息(触发事件)之后，
+会按照订阅的先后顺序执行所有的事件处理函数
+但是如果在执行的过程中有一个订阅函数返回的不是undefined, 就会停止执行后续函数
+
+3.什么是SyncWaterfallHook同步串行钩子
+SyncWaterfallHook关心订阅函数(事件处理函数)的返回值，在收到消息(触发事件)之后，
+会按照订阅的先后顺序执行所有的事件处理函数
+并且会将上一个订阅函数的返回值作为参数传递给下一个订阅函数
+
+4.什么是SyncLoopHook同步串行钩子
+SyncLoopHook关心订阅函数(事件处理函数)的返回值，在收到消息(触发事件)之后，
+会按照订阅的先后顺序执行所有的事件处理函数
+并且如果订阅函数的返回值不是undefined就会一直执行当前订阅函数
+
+5.什么是AsyncParallelHook异步并行钩子
+发出消息后，会同时执行所有的订阅函数
+并且在执行订阅函数时会自动传递一个callback参数,
+每个订阅函数执行完毕之后必须通过callback告诉系统订阅函数已经执行完毕了
+当所有订阅函数都调用完callback后会通过回调函数的方式告诉callAsync全部执行完毕了
+
+注意点:
+想要使用AsyncParallelHook, 注册事件时需要通过tapAsync注册, 触发事件时需要通过callAsync触发
+
+6.什么是AsyncSeriesHook异步串行钩子
+和AsyncParallelHook一样都是异步执行的,
+不同的是AsyncSeriesHook是串行, 前面一个执行完后面一个才能执行
+
+7.什么是AsyncSeriesHook异步串行钩子
+AsyncSeriesHook除了可以通过tapAsync和callAsync来订阅发布消息以外
+还可以通过tapPromise和promise来订阅发布消息
+
+8.什么是AsyncSeriesWaterfallHook异步串行钩子
+和前面讲解的AsyncSeriesHook一样, 前面的订阅函数没有执行完后面的订阅函数就不执行
+和前面讲解的SyncWaterfallHook一样, 会将上一个订阅函数的返回值传递给下一个的订阅函数
+
+9.什么是AsyncSeriesWaterfallHook异步串行钩子
+AsyncSeriesWaterfallHook除了可以通过tapAsync和callAsync来订阅发布消息以外
+还可以通过tapPromise和promise来订阅发布消息
+
+-->
+</body>
+</html>
