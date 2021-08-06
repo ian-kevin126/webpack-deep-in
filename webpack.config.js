@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('./plugin/clean-webpack-plugin.js')
 
 module.exports = {
   /*
@@ -25,7 +26,7 @@ module.exports = {
     /*
     filename: 指定打包之后的JS文件的名称
     * */
-    filename: 'js/[name].js',
+    filename: 'index.js',
     /*
     path: 指定打包之后的文件存储到什么地方
     * */
@@ -64,5 +65,8 @@ module.exports = {
       // 指定打包的模板, 如果不指定会自动生成一个空的
       template: './index.html',
     }),
+    new CleanWebpackPlugin({
+      name: 'lnj'
+    })
   ]
 }
