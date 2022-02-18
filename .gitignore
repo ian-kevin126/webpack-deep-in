@@ -4,6 +4,7 @@
 *.diff
 *.err
 
+
 # git冲突合并的临时文件
 *.orig
 *.log
@@ -20,6 +21,7 @@
 #操作系统或编辑器文件夹
 .DS_Store
 ._*
+.idea
 .cache
 .project
 .settings
